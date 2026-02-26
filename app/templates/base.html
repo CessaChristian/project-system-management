@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Project Management System{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components/sidebar.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components/page-header.css') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <div class="layout">
+    {% set active_menu = active_menu|default('dashboard') %}
+    {% include 'components/sidebar.html' %}
+
+    <main class="main-content">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/components/sidebar-toggle.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

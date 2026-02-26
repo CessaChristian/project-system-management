@@ -1,0 +1,98 @@
+{# Sidebar Component — include 'components/sidebar.html' #}
+{# Expects variable: active_menu (string, e.g. 'dashboard', 'create_sr', 'my_work', etc.) #}
+
+{% set transaction_menus = ['create_sr', 'my_work'] %}
+{% set document_menus = ['upload_draft', 'approved_draft'] %}
+{% set report_menus = ['monitoring'] %}
+
+<aside class="sidebar">
+
+    <!-- Brand -->
+    <div class="sidebar-brand">
+        <img src="{{ url_for('static', filename='img/logo_alfamidi_square.png') }}" alt="Alfamidi Logo" class="sidebar-brand-logo-img" />
+        <span class="brand-system">Project Management&nbsp;System</span>
+    </div>
+
+    <!-- User Profile -->
+    <div class="sidebar-user">
+        <div class="sidebar-user-avatar">{{ (session.get('user_name', 'GA') | default('GA'))[:2] | upper }}</div>
+        <div class="sidebar-user-info">
+            <p class="user-name">{{ session.get('user_name', 'Guest') }}</p>
+            <p class="user-role">{{ session.get('user_role', '-') }}</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
+
+        <!-- Main -->
+        <span class="nav-section-label">Main</span>
+        <div class="nav-item">
+            <a href="{{ url_for('page.dashboard') }}" class="nav-link {{ 'active' if active_menu == 'dashboard' }}">
+                <span class="nav-icon"><i class="fas fa-gauge-high" aria-hidden="true"></i></span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+        </div>
+
+        <!-- Transaction -->
+        <span class="nav-section-label">Transaksi</span>
+        <div class="nav-item">
+            <button type="button" class="nav-link nav-toggle {{ 'active' if active_menu in transaction_menus }}">
+                <span class="nav-icon"><i class="fas fa-arrows-rotate" aria-hidden="true"></i></span>
+                <span class="nav-text">Transaction</span>
+                <i class="fas fa-chevron-right chevron {{ 'open' if active_menu in transaction_menus }}" aria-hidden="true"></i>
+            </button>
+            <div class="nav-submenu {{ 'open' if active_menu in transaction_menus }}">
+                <a href="{{ url_for('page.create_sr') }}" class="nav-sublink {{ 'active' if active_menu == 'create_sr' }}">
+                    <i class="fas fa-circle" aria-hidden="true"></i> Create SR
+                </a>
+                <a href="{{ url_for('page.my_work') }}" class="nav-sublink {{ 'active' if active_menu == 'my_work' }}">
+                    <i class="fas fa-circle" aria-hidden="true"></i> My Work
+                </a>
+            </div>
+        </div>
+
+        <!-- Documents -->
+        <span class="nav-section-label">Dokumen</span>
+        <div class="nav-item">
+            <button type="button" class="nav-link nav-toggle {{ 'active' if active_menu in document_menus }}">
+                <span class="nav-icon"><i class="fas fa-file-lines" aria-hidden="true"></i></span>
+                <span class="nav-text">Draft Penyelarasan SAT</span>
+                <i class="fas fa-chevron-right chevron {{ 'open' if active_menu in document_menus }}" aria-hidden="true"></i>
+            </button>
+            <div class="nav-submenu {{ 'open' if active_menu in document_menus }}">
+                <a href="#" class="nav-sublink {{ 'active' if active_menu == 'upload_draft' }}">
+                    <i class="fas fa-circle" aria-hidden="true"></i> Upload Draft
+                </a>
+                <a href="#" class="nav-sublink {{ 'active' if active_menu == 'approved_draft' }}">
+                    <i class="fas fa-circle" aria-hidden="true"></i> Approved Draft
+                </a>
+            </div>
+        </div>
+
+        <!-- Reports -->
+        <span class="nav-section-label">Laporan</span>
+        <div class="nav-item">
+            <button type="button" class="nav-link nav-toggle {{ 'active' if active_menu in report_menus }}">
+                <span class="nav-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></span>
+                <span class="nav-text">Monitoring</span>
+                <i class="fas fa-chevron-right chevron {{ 'open' if active_menu in report_menus }}" aria-hidden="true"></i>
+            </button>
+            <div class="nav-submenu {{ 'open' if active_menu in report_menus }}">
+                <!-- sub items dapat ditambahkan nanti -->
+            </div>
+        </div>
+
+    </nav>
+
+    <!-- Footer -->
+    <div class="sidebar-footer">
+        <form action="{{ url_for('auth.logout') }}" method="POST">
+            <button type="submit" class="logout-btn">
+                <i class="fas fa-arrow-right-from-bracket" aria-hidden="true"></i>
+                <span>Sign Out</span>
+            </button>
+        </form>
+    </div>
+
+</aside>
